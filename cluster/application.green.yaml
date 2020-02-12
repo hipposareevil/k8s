@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-deployment
+spec:
+  selector:
+    matchLabels:
+      run: green-deployment
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: green-deployment
+    spec:
+      volumes:
+        - name: config-data-volume
+          configMap:
+            name: green-config
+      containers:
+        - name: green-container
+          image: hipposareevil/simple:latest
+          volumeMounts:
+          - mountPath: /config
+            name: config-data-volume
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+

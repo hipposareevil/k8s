@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: simple-blue
+  annotations:
+    kubernetes.io/ingress.class: nginx-protected
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/limit-rps: '100'
+spec:
+  tls:
+  - hosts: ["simple-test.nausw2-1.k8s.platform.einstein.com"]
+    secretName: simple-tls
+  rules:
+  - host: simple-test.nausw2-1.k8s.platform.einstein.com
+    http:
+      paths:
+      - path: /blue
+        backend:
+          serviceName: blue-service
+          servicePort: 8080

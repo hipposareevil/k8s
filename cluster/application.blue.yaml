@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blue-deployment
+spec:
+  selector:
+    matchLabels:
+      run: blue-deployment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: blue-deployment
+    spec:
+      volumes:
+        - name: config-data-volume
+          configMap:
+            name: blue-config
+      containers:
+        - name: blue-container
+          image: hipposareevil/simple:latest
+          volumeMounts:
+          - mountPath: /config
+            name: config-data-volume
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+
