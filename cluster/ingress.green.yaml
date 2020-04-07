@@ -10,10 +10,10 @@ metadata:
 #    nginx.ingress.kubernetes.io/whitelist-source-range: "126.37.5.171/12"
 spec:
   tls:
-  - hosts: ["simple-test.nausw2-1.k8s.platform.einstein.com"]
+  - hosts: ["simple-test.dausw2-general.k8s.platform.einstein.com"]
     secretName: simple-tls
   rules:
-  - host: simple-test.nausw2-1.k8s.platform.einstein.com
+  - host: simple-test.dausw2-general.k8s.platform.einstein.com
     http:
       paths:
       - path: /green

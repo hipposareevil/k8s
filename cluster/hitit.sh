@@ -1,7 +1,7 @@
 #!/bin/bash
 
-GREEN_ENDPOINT="https://simple-test.nausw2-1.k8s.platform.einstein.com/green"
-BLUE_ENDPOINT="https://simple-test.nausw2-1.k8s.platform.einstein.com/blue"
+GREEN_ENDPOINT="https://simple-test.dausw2-1.k8s.platform.einstein.com/green"
+BLUE_ENDPOINT="https://simple-test.dausw2-1.k8s.platform.einstein.com/blue"
 
 
 hit() {
