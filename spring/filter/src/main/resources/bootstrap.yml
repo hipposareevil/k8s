@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: filterit
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      config:
+        enabled: true
+      discovery:
+        hostname: localhost
+        register-health-check: false
+
