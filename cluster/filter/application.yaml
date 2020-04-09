@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: filter-deployment
+spec:
+  selector:
+    matchLabels:
+      run: filter-deployment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: filter-deployment
+    spec:
+      containers:
+        - name: filter-container
+          image: hipposareevil/filter:0.0.2
+          env:
+            - name: HOST_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+

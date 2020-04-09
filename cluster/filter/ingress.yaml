@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: filter
+  annotations:
+    kubernetes.io/ingress.class: nginx-protected
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+#    nginx.ingress.kubernetes.io/rewrite-target: /
+#    nginx.ingress.kubernetes.io/limit-rps: '10'
+#    nginx.ingress.kubernetes.io/whitelist-source-range: "126.37.5.171/12"
+spec:
+  tls:
+  - hosts: ["simple-test.dausw2-general.k8s.platform.einstein.com"]
+    secretName: filter-tls
+  rules:
+  - host: superfunk-filter.dausw2-general.k8s.platform.einstein.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: filter-service
+          servicePort: 8080

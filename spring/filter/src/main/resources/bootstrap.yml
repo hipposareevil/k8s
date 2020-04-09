@@ -1,13 +1,14 @@
 spring:
   application:
-    name: filterit
+    name: application-service
   cloud:
     consul:
-      host: localhost
+      host: ${HOST_IP:localhost}
       port: 8500
       config:
         enabled: true
+        failFast: false
       discovery:
-        hostname: localhost
+        hostname: ${HOST_IP:localhost}
         register-health-check: false
 

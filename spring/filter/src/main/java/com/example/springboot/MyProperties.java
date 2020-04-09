@@ -7,17 +7,47 @@ import org.springframework.context.annotation.Configuration;
 
 @RefreshScope
 @Configuration
-@ConfigurationProperties("my")
+@ConfigurationProperties("tenant")
 public class MyProperties {
 
-    private String prop;
+    private String fast;
+    private String slow;
+    private String dcos;
+    private String k8s;
 
-    public String getProp() {
-        return prop;
+    public String getDcos() {
+        return dcos;
     }
 
-    public void setProp(String prop) {
-        this.prop = prop;
+    public void setDcos(String prop) {
+        this.dcos = prop;
+    }
+
+
+    public String getK8s() {
+        return k8s;
+    }
+
+    public void setK8s(String prop) {
+        this.k8s = prop;
+    }
+
+
+    public String getFast() {
+        return fast;
+    }
+
+    public void setFast(String prop) {
+        this.fast = prop;
+    }
+
+
+    public String getSlow() {
+        return slow;
+    }
+
+    public void setSlow(String prop) {
+        this.slow = prop;
     }
 
 }

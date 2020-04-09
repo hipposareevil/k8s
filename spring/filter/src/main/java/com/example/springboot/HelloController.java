@@ -11,11 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 
 @RestController
@@ -26,23 +28,47 @@ public class HelloController {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
+//    @Value("${my.prop}")
+//    String value;
 
-    @Value("${my.prop}")
-    String value;
-
-   @Autowired
-    private MyProperties properties;
-
-
-
- @GetMapping("/getConfigFromValue")
+    // Not updated when value in consul changes
+/*
+    @GetMapping("/getConfigFromValue")
     public String getConfigFromValue() {
         return value;
     }
+*/
 
-    @GetMapping("/getConfigFromProperty")
-    public String getConfigFromProperty() {
-        return properties.getProp();
+
+    @Autowired
+    private MyProperties properties;
+
+
+    @GetMapping("/getUrl")
+    public String getUrl(@RequestParam String tenant) {
+        String k8s_tenants = properties.getK8s();
+        String dcos_tenants = properties.getDcos();
+
+        String whereToGo = "default location";
+        if (k8s_tenants.contains(tenant)) {
+            whereToGo = "k8s";
+        }
+        else if (dcos_tenants.contains(tenant)) {
+            whereToGo = "dcos";
+        }
+
+        return "tenant: " + tenant + " goes to <" + whereToGo + ">";
+    }
+
+
+    @GetMapping("/getFastOnes")
+    public String getFastOnes() {
+        return properties.getFast();
+    }
+
+    @GetMapping("/getSlowOnes")
+    public String getSlowOnes() {
+        return properties.getSlow();
     }
 
 
