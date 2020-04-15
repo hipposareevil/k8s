@@ -3,6 +3,7 @@ package com.example.springboot;
 import java.net.URI;
 import java.util.Optional;
 import java.io.*;
+import java.util.*;
 import javax.naming.ServiceUnavailableException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -46,31 +47,18 @@ public class HelloController {
 
     @GetMapping("/getUrl")
     public String getUrl(@RequestParam String tenant) {
-        String k8s_tenants = properties.getK8s();
-        String dcos_tenants = properties.getDcos();
+        // default
+        String whereToGo = "DCOS";
 
-        String whereToGo = "default location";
-        if (k8s_tenants.contains(tenant)) {
+        List<String> k8s_tenants = Arrays.asList(properties.getK8s().split("\\s*,\\s*"));
+        boolean match = k8s_tenants.stream().anyMatch(tenant::equals);
+
+        if (match) {
             whereToGo = "k8s";
         }
-        else if (dcos_tenants.contains(tenant)) {
-            whereToGo = "dcos";
-        }
 
-        return "tenant: " + tenant + " goes to <" + whereToGo + ">";
+        return "tenant '" + tenant + "' goes to <" + whereToGo + ">";
     }
-
-
-    @GetMapping("/getFastOnes")
-    public String getFastOnes() {
-        return properties.getFast();
-    }
-
-    @GetMapping("/getSlowOnes")
-    public String getSlowOnes() {
-        return properties.getSlow();
-    }
-
 
 
 	@RequestMapping("/")

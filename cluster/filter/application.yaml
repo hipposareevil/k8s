@@ -15,11 +15,15 @@ spec:
       containers:
         - name: filter-container
           image: hipposareevil/filter:0.0.2
+          imagePullPolicy: Always
           env:
+            - name: CONSUL_PORT
+              value: "443"
             - name: HOST_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
+              value: "https://saws-consul.dev.platform.einstein.com"
+#              valueFrom:
+#                fieldRef:
+#                  fieldPath: status.hostIP
           ports:
             - containerPort: 8080
               protocol: TCP
